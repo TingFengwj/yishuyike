@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-import json
-import os
-import re
-import time
 from os import path
-
-import requests
 import scrapy
+import re
+from run import *
 
 header_365 = {"Accept-Language": "zh-CN,zh;q=0.8",
               "User-Agent": "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; MI 6  Build/ID) AppleWebKit/534.30 ("
                             "KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
               "Connection": "close",
-              "token": "104f239bdff84b7ab35d21155f9f6ae6",
-              "cykey": "708349c69e7b6bb47667d8261dea965b",
+              "token": TOKEN,
+              "cykey": CYKEY,
               "Host": "api.chiyue365.com",
               "Accept-Encoding": "gzip", }
 
@@ -42,7 +38,7 @@ class YsykSpider(scrapy.Spider):
         print(resp)
         for i in resp['data']['contents']:
             if i['videoDurationLabel'] != "0'0''":
-                if i['contentTitle'] == "不懂带人，你就自己干到死":  # 书的名字
+                if i['contentTitle'] == "行动教练":  # 书的名字
                     yield scrapy.FormRequest(
                         url='https://api.chiyue365.com/v4/contents/%d?traceId=36d335127e3c9e59cddfd5dca15eed31'
                             '&userInfoVersion=%d&cysecret=%d' % (i['contentId'], resp['extra']['userInfoVersion'],
